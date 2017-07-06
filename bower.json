@@ -1,0 +1,30 @@
+{
+  "name": "people10_employee_app_public",
+  "description": "Front End for People10 Employee Management App",
+  "main": "index.js",
+  "authors": [
+    "nayakashu"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Employee",
+    "Management",
+    "CRUD",
+    "People10",
+    "UI",
+    "Frontend"
+  ],
+  "homepage": "https://github.com/nayakashu/people10-employee-app",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.6.5"
+  }
+}

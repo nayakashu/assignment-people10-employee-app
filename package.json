@@ -1,0 +1,33 @@
+{
+  "name": "people10_employee_app",
+  "version": "1.0.0",
+  "description": "Employee Managament App (CRUD Based) for People10",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "./node_modules/bower/bin/bower install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nayakashu/people10-employee-app.git"
+  },
+  "keywords": [
+    "Employee",
+    "Management",
+    "CRUD",
+    "People10"
+  ],
+  "author": "nayakashu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nayakashu/people10-employee-app/issues"
+  },
+  "homepage": "https://github.com/nayakashu/people10-employee-app#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bower": "^1.8.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.1"
+  }
+}
