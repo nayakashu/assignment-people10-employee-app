@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="EmployeeApp">
+
+<head>
+    <title>People10 Employee Management App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body ng-controller="ListEmployeesController">
+    <!-- Top Horizontal Banner -->
+    <nav class="navbar navbar-custom">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">{{ appName }}</a>
+            </div>
+        </div>
+    </nav>
+       
+    <div class="container-fluid">
+        <div class="col-md-10">
+            <input type="text" class="form-control" id="lgFormGroupInput" placeholder="Search employee.." ng-model="searchKey">
+        </div>
+
+        <div class="col-md-2 right-align-content">
+            <!--<button type="button" class="btn btn-success employee-green-btn" data-toggle="modal" data-target="#employeeEditModal" ng-click="setAddemployeeFlag()">+ Add New employee</button>-->
+        </div>
+
+        <!-- Details Pane -->
+        <div id="detailsPane" class="col-md-12">
+            <table class="table table-responsive table-hover">
+                <thead class="thead-default bg-info">
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>DOB</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="employee in allEmployees | filter: searchKey">
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td>{{ employee.FirstName }}</td>
+                        <td>{{ employee.LastName }}</td>
+                        <td>{{ employee.Email }}</td>
+                        <td>{{ employee.Age }}</td>
+                        <td>{{ employee.Gender }}</td>
+                        <td>{{ employee.DOB }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+
+    <script src="app/modules/employee.Module.js"></script>
+    <script src="app/services/api.Service.js"></script>
+    <script src="app/controllers/listEmployees.Controller.js"></script>
+</body>
+
+</html>
