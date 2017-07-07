@@ -4,6 +4,7 @@
 # Employee Management app for People10 Assignment
 ***********************************************************************************************************
 
+# For testing the back-end APIs (developed in ExpressJS), the following instructions can be followed.
 
 ** Need a API testing client like Postman or DHC **
 
