@@ -55,11 +55,14 @@ The front-end consists of the following.
 
 1. A horizontal banner with the name of the app.
 2. A horizontal searchbox to list and filter the names of the employees and to select the desired employee for edit / delete.
-3. Pending - Add / Edit / Delete employee feature.
-4. Pending - Buttons - Add, Del or Edit a player.
-5. Pending - The Add, Del and Edit operations will happen through a modal dialog.
-6. Pending - Form Validation with respective error messages has been implemented for Add / Edit forms.
-7. Pending - Success and Error messages are dynamically shown in the modal dialog based on the user's operation.
+3. Add / Edit / Delete employee feature.
+4. Buttons - Add, Edit or Del an employee.
+5. The Add, Edit and Del operations will happen through a modal dialog.
+6. Form Validation with respective error messages has been implemented for Add / Edit forms.
+7. Success and Error messages are dynamically shown in the modal dialog based on the user's operation.
+8. Angular Material Datepicker for DOB feature.
+9. Age is validated with the Datepicker value.
+10. Valid age of an employee is considered to be greater than or equal to 18 years.
 
 ***********************************************************************************************************
 
@@ -69,4 +72,4 @@ The front-end consists of the following.
 2. The app URL: https://people10-employee-management.herokuapp.com/
 2. The HerokuApps server takes care of installing the dependent node and bower components.
 3. npm is used as the package manager for the back-end - node, express, mongodb and mongoose.
-4. bower is used as the package manager for the front-end - jQuery, bootstrap and angular.
+4. bower is used as the package manager for the front-end - angular, bootstrap, and moment.

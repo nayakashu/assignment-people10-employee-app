@@ -1,0 +1,174 @@
+<div id="employee-list-partial" ng-controller="ListEmployeesController" ng-init="initializeDetailsPane()">
+    <!-- Search Bar -->
+    <div class="col-md-10">
+        <input type="text" class="form-control" id="lgFormGroupInput" placeholder="Search employee.." ng-model="searchKey">
+    </div>
+
+    <!-- Add Employee Button -->
+    <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-success employee-add-green-btn" data-toggle="modal" data-target="#employee-edit-modal"
+            ng-click="addEmployee()">+ Add New employee</button>
+    </div>
+
+    <!-- Details Pane -->
+    <div id="employee-details-pane" class="col-md-12 margin-top-25">
+        <table class="table table-responsive table-hover">
+            <thead class="thead-default bg-info">
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="employee in allEmployees | filter: searchKey track by $index">
+                    <th scope="row">{{ $index + 1 }}</th>
+                    <td>{{ employee.FirstName }}</td>
+                    <td>{{ employee.LastName }}</td>
+                    <td>{{ employee.Email }}</td>
+                    <td>{{ employee.Age }}</td>
+                    <td>{{ employee.Gender }}</td>
+                    <td>{{ getFormattedDOB(employee.DOB) }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#employee-edit-modal" ng-click="editEmployee(employee)">Edit</button>
+                        <button type="button" class="btn btn-danger btn-edit" data-toggle="modal" data-target="#employee-delete-modal" ng-click="deleteEmployee(employee)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modals for Add / Edit / Delete -->
+    <div id="modify-employee-modal" ng-controller="ModifyEmployeeModalController">
+        <!-- Employee Add / Edit Modal -->
+        <div id="employee-edit-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-info">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="closeModal()">&times;</button>
+                        <h4 class="modal-title">{{ addOrEdit }} Employee Details</h4>
+                    </div>
+
+                    <div class="modal-body modal-padding">
+                        <form>
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Enter first name" ng-model="firstName" ng-readonly="employeeSaved">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Enter last name" ng-model="lastName" ng-readonly="employeeSaved">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailAddress">Email address</label>
+                                <input type="email" class="form-control" id="emailAddress" placeholder="Enter email" ng-model="emailAddress" ng-readonly="employeeSaved">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob">Date of birth</label>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-datepicker md-placeholder="Enter date" md-open-on-focus md-max-date="maxDate" ng-model="dob" ng-change="setAge()" ng-disabled="employeeSaved"></md-datepicker>
+                                    </div>
+                                    <small>
+                                        Employee must be at least 18 years old.
+                                    </small>
+                                </div>  
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" class="form-control" id="age" placeholder="Enter age" ng-model="age" readonly>
+                            </div>
+
+                            <fieldset class="form-group">
+                                <legend>Gender</legend>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="genderOption" value="Male" ng-model="gender" ng-disabled="employeeSaved">
+                                        Male
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="genderOption" value="Female" ng-model="gender" ng-disabled="employeeSaved">
+                                        Female
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="genderOption" value="Other" ng-model="gender" ng-disabled="employeeSaved">
+                                        Other
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="genderOption" value="RatherNotSay" ng-model="gender" ng-disabled="employeeSaved">
+                                        Rather not say
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <div class="modal-footer">
+                            <div class="col-md-6 text-center">
+                                <div class="alert alert-success" ng-if="successMessage">
+                                    {{ successMessage }}
+                                </div>
+                                <div class="alert alert-danger" ng-if="errorMessage">
+                                    {{ errorMessage }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="button" class="btn btn-warning btn-lg" data-dismiss="modal" ng-click="closeModal()">Close</button>
+                                <button type="button" class="btn btn-success employee-green-btn btn-lg" ng-click="saveEmployeeData()" ng-disabled="employeeSaved">Save Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Delete Modal -->
+        <div id="employee-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="closeModal()">&times;</button>
+                        <h4 class="modal-title">Delete Employee: {{ employeeToBeDeleted.FirstName }} {{ employeeToBeDeleted.LastName }}</h4>
+                    </div>
+
+                    <div class="modal-body modal-padding">
+                        <h4 class="right-align-content" ng-if="!(successMessage || errorMessage)">Confirm to delete {{ employeeToBeDeleted.FirstName }} {{ employeeToBeDeleted.LastName }}</h4>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-6 text-center">
+                            <div class="alert alert-success" ng-if="successMessage">
+                                {{ successMessage }}
+                            </div>
+                            <div class="alert alert-danger" ng-if="errorMessage">
+                                {{ errorMessage }}
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button type="button" class="btn btn-warning btn-lg" data-dismiss="modal" ng-click="closeModal()">Close</button>
+                            <button type="button" class="btn btn-danger btn-lg" ng-click="deleteEmployeeData()" ng-disabled="employeeDeleted">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,1 @@
-var employeeApp = angular.module('EmployeeApp', []);
+var employeeApp = angular.module('EmployeeApp', ['ngRoute', 'ngAnimate', 'ngMessages', 'ngMaterial']);

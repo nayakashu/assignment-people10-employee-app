@@ -8,6 +8,7 @@
 var express =  require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
+    ejs = require('ejs'),
     path = require('path');
 
 /**
@@ -46,22 +47,47 @@ app.use(function(req, res, next) {
 /**
  * MongoDB Models
  */
-var EmployeeModel = require('./dbmodels/employee');
+var EmployeeModel = require('./app/dbmodels/employee');
 
 /**
  * Routes for the app
  */
-var employeeRouter = require('./routes/employeeRouter')(EmployeeModel);
+var employeeRouter = require('./app/routers/employeeRouter')(EmployeeModel);
 
 /**
- * Register the routes
+ * Register the api routers
  */
 app.use('/api', employeeRouter);
 
 /**
  * Configure express to serve static html pages inside of your public folder
  */
-app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * Set up the view engine
+ */
+app.set('views', __dirname + '/public/views');
+app.engine('.html', ejs.renderFile);
+app.set('view engine', 'html');
+app.set('view options', { layout: false });
+
+/**
+ * Register the public directory
+ */
+app.use(express.static(path.join(__dirname, '/public')));
+
+/**
+ * Controllers for the app
+ */
+var routingController = require('./app/controllers/routing');
+
+/**
+ * Set the server routes
+ */
+app.get('/', routingController.indexPage);
+app.get('/partials/:partialName', routingController.partialsPages);
+app.get('*', routingController.indexPage);
+
 
 /** 
  * Set up PORT 
@@ -69,7 +95,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var port = process.env.PORT || 3040;
 
 /**
- * GET request response
+ * GET request response for API
  */
 app.get('/api', function(req, res) {
     res.json({ status: "People10 Employee App API is running at port: " + port});
